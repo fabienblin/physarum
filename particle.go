@@ -22,7 +22,8 @@ func ParticleFactory(nbParticles int) []*Particle {
 
 	for i := 0; i < nbParticles; i++ {
 		Particles[i] = &Particle{
-			pos:            Pos{x: rand.Float64() * float64(ImageWidth), y: rand.Float64() * float64(ImageHeight)},
+			pos:            Pos{x: 0.5 * float64(ImageWidth), y: 0.5 * float64(ImageHeight)},
+			// pos:            Pos{x: rand.Float64() * float64(ImageWidth), y: rand.Float64() * float64(ImageHeight)},
 			direction:      rand.Float64() * math.Pi * 2,
 			sensorAngle:    math.Pi * SensorAngle,
 			sensorDistance: SensorDistance,
@@ -79,12 +80,12 @@ func (p *Particle) DrawParticle() {
 
 func (p *Particle) MoveParticle() {
 	p.SensePheromone()
+
 	dx := (ParticleSpeed * (math.Cos(float64(p.direction))))
 	dy := (ParticleSpeed * (math.Sin(float64(p.direction))))
 
 	nextX := dx + float64(p.pos.x)
 	nextY := dy + float64(p.pos.y)
-
 	for nextX < 0 || nextY < 0 || nextX >= float64(ImageWidth) || nextY >= float64(ImageHeight) {
 		p.TurnParticle()
 
@@ -94,13 +95,14 @@ func (p *Particle) MoveParticle() {
 		nextX = dx + float64(p.pos.x)
 		nextY = dy + float64(p.pos.y)
 	}
+
 	addPheromoneAlongPath(p.pos, Pos{(nextX), (nextY)})
 	
 	p.pos.x = (nextX)
 	p.pos.y = (nextY)
 	
-	// wiggle
-	p.direction += rand.Float64()* ParticleWiggle
+	p.direction += rand.Float64() * math.Pi * ParticleWiggle
+
 	p.RepositionSensors()
 }
 
@@ -132,5 +134,12 @@ func (p *Particle) SensePheromone() {
 	// Update the particle's direction to turn toward the most pheromone-concentrated direction
 	if maxPheromone != 0 {
 		p.direction = bestDirection
+	} else {
+		// Randomly choose between left and right when both sensors have identical values
+		if rand.Float64() < 0.5 {
+			p.direction -= p.sensorAngle // Turn left
+		} else {
+			p.direction += p.sensorAngle // Turn right
+		}
 	}
 }

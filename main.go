@@ -1,9 +1,6 @@
 package main
 
 import (
-	"image/color"
-	"math"
-
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -12,18 +9,16 @@ const ImageHeight int = 500
 const ImageWidth int = 500
 
 // Particle
-var NbParticles int = 1000
-var ParticleSpeed float64 = 10
-var SensorDistance float64 = 20
-var SensorAngle float64 = 0.1                   // value should be [0, 0.5]
-var ParticleWiggle float64 = math.Pi * 2 * 0.05 // PI * 2 * [0.0, 2.0]
+var NbParticles int = 2000
+var ParticleSpeed float64 = 2
+var SensorDistance float64 = 30
+var SensorAngle float64 = 0.2       // value should be [0, 0.5]
+var ParticleWiggle float64 = 0.0000 // [0.0, 0.5]
 
 // Pheromone
-const DiffusionRate float64 = 1 // [-1.0, 1.0]
-const DecayRate float64 = -0.1  // must be negative neer 0
-const PheromoneDeposit = 1
-
-var PheromoneColor = color.RGBA{0, 0, 255, 255}
+const DiffusionRate float64 = 1   // [-1.0, 1.0]
+const DecayRate float64 = -0.05   // must be negative neer 0
+var PheromoneDeposit float64 = .9 // [0, 1]
 
 func init() {
 	Game = initGame()

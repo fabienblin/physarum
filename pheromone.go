@@ -1,6 +1,7 @@
 package main
 
 import (
+	"image"
 	"image/color"
 	"math"
 
@@ -38,5 +39,12 @@ func addPheromoneToPixel(x, y int) {
 }
 
 func DecayPheromones() {
-	Game.PheromoneImage = ebiten.NewImageFromImage(adjust.Brightness(blur.Gaussian(Game.PheromoneImage, DiffusionRate), DecayRate))
+	var adjustedImg image.Image = Game.PheromoneImage
+
+	adjustedImg = adjust.Hue(Game.PheromoneImage, -5)
+	adjustedImg = adjust.Brightness(adjustedImg, DecayRate)
+
+	adjustedImg = blur.Gaussian(adjustedImg, DiffusionRate)
+
+	Game.PheromoneImage = ebiten.NewImageFromImage(adjustedImg)
 }

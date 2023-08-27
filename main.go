@@ -10,10 +10,10 @@ const ImageWidth int = 500
 
 // Particle
 var NbParticles int = 2000
-var ParticleSpeed float64 = 2
-var SensorDistance float64 = 30
-var SensorAngle float64 = 0.2       // value should be [0, 0.5]
-var ParticleWiggle float64 = 0.0000 // [0.0, 0.5]
+var ParticleSpeed float64 = 6
+var SensorDistance float64 = 5
+var SensorAngle float64 = 0.2     // value should be [0, 0.5]
+var ParticleWiggle float64 = 0.01 // [0.0, 0.5]
 
 // Pheromone
 const DiffusionRate float64 = 1   // [-1.0, 1.0]

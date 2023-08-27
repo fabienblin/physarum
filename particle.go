@@ -101,7 +101,7 @@ func (p *Particle) MoveParticle() {
 	p.pos.x = (nextX)
 	p.pos.y = (nextY)
 
-	p.direction += rand.Float64() * 2 * math.Pi * ParticleWiggle
+	p.direction += (rand.Float64() - 0.5) * ParticleWiggle
 
 	p.RepositionSensors()
 }

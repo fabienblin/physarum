@@ -22,7 +22,7 @@ func ParticleFactory(nbParticles int) []*Particle {
 
 	for i := 0; i < nbParticles; i++ {
 		Particles[i] = &Particle{
-			pos:            Pos{x: 0.5 * float64(ImageWidth), y: 0.5 * float64(ImageHeight)},
+			pos: Pos{x: 0.5 * float64(ImageWidth), y: 0.5 * float64(ImageHeight)},
 			// pos:            Pos{x: rand.Float64() * float64(ImageWidth), y: rand.Float64() * float64(ImageHeight)},
 			direction:      rand.Float64() * math.Pi * 2,
 			sensorAngle:    math.Pi * SensorAngle,
@@ -97,11 +97,11 @@ func (p *Particle) MoveParticle() {
 	}
 
 	addPheromoneAlongPath(p.pos, Pos{(nextX), (nextY)})
-	
+
 	p.pos.x = (nextX)
 	p.pos.y = (nextY)
-	
-	p.direction += rand.Float64() * math.Pi * ParticleWiggle
+
+	p.direction += rand.Float64() * 2 * math.Pi * ParticleWiggle
 
 	p.RepositionSensors()
 }
@@ -112,6 +112,8 @@ func (p *Particle) TurnParticle() {
 
 func (p *Particle) SensePheromone() {
 	var maxPheromone uint32 = 0
+	var leftPheromone uint32 = 0
+	var rightPheromone uint32 = 0
 	bestDirection := p.direction // Initialize with current direction
 
 	// Calculate the maximum pheromone value and find the best direction
@@ -132,9 +134,9 @@ func (p *Particle) SensePheromone() {
 	}
 
 	// Update the particle's direction to turn toward the most pheromone-concentrated direction
-	if maxPheromone != 0 {
-		p.direction = bestDirection
-	} else {
+	if maxPheromone == 0 {
+		return
+	} else if leftPheromone == rightPheromone {
 		// Randomly choose between left and right when both sensors have identical values
 		if rand.Float64() < 0.5 {
 			p.direction -= p.sensorAngle // Turn left
@@ -142,4 +144,5 @@ func (p *Particle) SensePheromone() {
 			p.direction += p.sensorAngle // Turn right
 		}
 	}
+	p.direction = bestDirection
 }

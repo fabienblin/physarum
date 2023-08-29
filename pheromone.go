@@ -44,7 +44,7 @@ func DecayPheromones() {
 	adjustedImg = adjust.Hue(Game.PheromoneImage, -5)
 	adjustedImg = adjust.Brightness(adjustedImg, DecayRate)
 
-	adjustedImg = blur.Gaussian(adjustedImg, DiffusionRate)
+	adjustedImg = blur.Gaussian(adjustedImg, GaussianDiffusion)
 
 	Game.PheromoneImage = ebiten.NewImageFromImage(adjustedImg)
 }

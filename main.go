@@ -5,20 +5,20 @@ import (
 )
 
 // Game
-const ImageHeight int = 500
-const ImageWidth int = 500
+const ImageHeight int = 450
+const ImageWidth int = 800
 
 // Particle
-var NbParticles int = 2000
+var NbParticles int = 4000
 var ParticleSpeed float64 = 2
-var SensorDistance float64 = 10
+var SensorDistance float64 = 20
 var SensorAngle float64 = 0.15   // value should be [0, 0.5]
 var ParticleWiggle float64 = 0.5 // [0.0, 0.5]
 
 // Pheromone
-const DiffusionRate float64 = 1   // [-1.0, 1.0]
-const DecayRate float64 = -0.05   // must be negative neer 0
-var PheromoneDeposit float64 = .9 // [0, 1]
+const GaussianDiffusion float64 = 1 // [0, 1.0]
+const DecayRate float64 = -0.05     // must be negative neer 0
+var PheromoneDeposit float64 = .9   // [0, 1]
 
 func init() {
 	Game = initGame()

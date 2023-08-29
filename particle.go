@@ -15,7 +15,7 @@ type Particle struct {
 	sensorDistance float64
 	sensors        [3]Pos
 	spiecies       color.RGBA
-	speed			float64
+	speed          float64
 }
 
 func ParticleFactory(nbParticles int) []*Particle {
@@ -29,7 +29,7 @@ func ParticleFactory(nbParticles int) []*Particle {
 			sensorAngle:    math.Pi * SensorAngle,
 			sensorDistance: SensorDistance,
 			spiecies:       color.RGBA{255, 255, 255, 255},
-			speed:			ParticleSpeed,
+			speed:          ParticleSpeed,
 		}
 		Particles[i].RepositionSensors()
 	}
@@ -148,5 +148,5 @@ func (p *Particle) SensePheromone() {
 		}
 	}
 	p.direction = bestDirection
-	p.speed += ParticleSpeed * float64(maxPheromone)
+	p.speed += (ParticleSpeed * float64(maxPheromone) / 0xffff) * 5
 }
